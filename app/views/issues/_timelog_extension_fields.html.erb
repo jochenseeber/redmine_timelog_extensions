@@ -1,0 +1,48 @@
+<%#
+
+  Copyright 2012 Jochen Seeber
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU Affero General Public License as published by the Free
+  Software Foundation, either version 3 of the License, or (at your option) any
+  later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+  details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+%>
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function() {
+    $('input#time_entry_hours').attr('readonly', true);
+
+    var source_fieldset = $('fieldset#extended_timelog_fields');
+    var target_fieldset = $('input#time_entry_hours').closest('fieldset');
+    source_fieldset.detach();
+    target_fieldset.append(source_fieldset.children());
+});
+//]]>
+</script>
+<% if true || User.current.allowed_to?(:log_time, @project) %>
+<fieldset class="tabular" id="extended_timelog_fields">
+<%= fields_for :time_entry, @time_entry do |time_entry| %>
+<p>
+    <%= time_entry.text_field :started_on_str, :size => 6 %>
+    <em>e.g. <%= I18n.format_i18n_time(Time.now) %></em>
+</p>
+<p>
+    <%= time_entry.text_field :ended_on_str, :size => 6, :required => true %>
+    <em>e.g. <%= I18n.format_i18n_time(Time.now + 2700) %></em>
+</p>
+<p>
+    <%= time_entry.text_field :pause_minutes_str, :size => 3 %>
+    <em>e.g. 0:15</em>
+</p>
+<% end %>
+</fieldset>
+<% end %>
