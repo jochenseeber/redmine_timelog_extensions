@@ -24,7 +24,7 @@ $(document).ready(function() {
 //]]>
 </script>
 <p>
-    <%= x = form.text_field :started_on_str, :size => 6, :required => true, :value => @time_entry.started_on_str %>
+    <%= x = form.text_field :started_on_str, :size => 6, :required => true %>
     <em><%= I18n.format_i18n_time(Time.now) %></em>
 </p>
 <p>
